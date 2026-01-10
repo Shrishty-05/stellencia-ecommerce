@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* 640d14 [maroon], 
+f9eae1 off white , 
+1b4332 green [dark] , 
+adc178 sage green , 
+3c096c purple , 
+light pink ff7096 */
+.maroon{
+    background-color: #640d14;
+}
+
+
+.off-white{
+    background-color: #f9eae1;
+}
+
+
