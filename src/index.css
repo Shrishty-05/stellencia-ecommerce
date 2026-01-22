@@ -6,6 +6,17 @@ f9eae1 off white ,
 adc178 sage green , 
 3c096c purple , 
 light pink ff7096 */
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+
 .maroon{
     background-color: #640d14;
 }
@@ -13,6 +24,13 @@ light pink ff7096 */
 
 .off-white{
     background-color: #f9eae1;
+}
+
+.occ{
+    height: auto;
+    width : auto;
+    background-color: #640d14;
+    border-radius: .5rem;
 }
 
 
