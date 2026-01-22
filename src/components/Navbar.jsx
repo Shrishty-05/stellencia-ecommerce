@@ -1,28 +1,23 @@
-import { Heart, ShoppingCart, User , Menu } from "lucide-react";
-import React from "react";
+import { Heart, ShoppingCart, User , Menu , HomeIcon} from "lucide-react";
+import SearchBar from "./SearchBar";
 
 export default function Navbar() {
 
-  return ( <>
-    <nav className="w-full maroon text-white flex items-center justify-between p-2">
-      <h1 className="p-1 text-lg font-serif" >STELLENCIA</h1>
+  return ( <section className="">
+    <nav className="w-full md:h-[40%] maroon text-white flex items-center justify-between p-2 sticky">
+      <h1 className="p-1 md:px-5 text-lg font-serif md:text-xl md:tracking-widest" >STELLENCIA</h1>
 
         <button className="p-1 text-lg" ><Menu className="md:hidden"></Menu></button>
 
-      <ul className="hidden md:flex justify-center items-center gap-2">
+      <ul className="hidden px-7 lg:px-10 md:flex justify-center items-center gap-5 lg:gap-10">
+         <li><HomeIcon/></li>
         <li><Heart /></li>
         <li><ShoppingCart /></li>
         <li><User /></li>
       </ul>
  </nav>
-    <div className="search-bar w-6/7 bg-white border my-1 m-auto p-1 rounded-sm md:inline">
-  <input
-    type="search"
-    placeholder="Search here..."
-    className="w-full placeholder:text-gray-500 text-left outline-none"
-  />
-</div>
+   {/* <SearchBar/> */}
 
- </>
+ </section>
   );
 }
