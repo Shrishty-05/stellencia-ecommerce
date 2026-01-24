@@ -36,7 +36,7 @@ export default function PromiseSection() {
             </div>
 
             {/* ===== TABLET & ABOVE (circular layout) ===== */}
-            <div className="relative hidden md:flex items-center justify-center h-[420px]">
+            <div className="relative hidden md:flex items-center justify-center h-105">
                 {/* Center box */}
                 <div className="absolute z-10 px-12 py-7 text-center rounded-xl
                 bg-linear-to-b from-[#bfa16a]/80 via-[#a77c3c]/70 to-[#8d6b2d]/80
@@ -67,7 +67,7 @@ function PromiseItem({ item, className }) {
     return (
         <div className={`absolute flex flex-col items-center gap-3 ${className}`}>
             <IconCircle Icon={item.icon} />
-            <p className="text-[maroon] text-sm font-medium text-center max-w-[140px]">
+            <p className="text-[maroon] text-sm font-medium text-center max-w-35">
                 {item.title}
             </p>
         </div>
