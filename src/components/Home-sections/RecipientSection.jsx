@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 const RECIPIENTS = [
   {
-    id: "her",
+    id: "women",
     label: "For Her",
     image: "/src/assets/her.png",
   },
   {
-    id: "him",
+    id: "men",
     label: "For Him",
     image: "/src/assets/him.png",
   },
@@ -28,8 +30,10 @@ export default function RecipientSection() {
       </header>
 
       {/* Cards */}
+      
       <div className="flex justify-center gap-10 md:gap-20">
         {RECIPIENTS.map(({ id, label, image }) => (
+          <Link key={id} to={`/plp/${id}`} >
           <div
             key={id}
             className="group flex flex-col items-center cursor-pointer"
@@ -52,8 +56,13 @@ export default function RecipientSection() {
               {label}
             </p>
           </div>
+          </Link>
         ))}
       </div>
+      
+    
     </section>
   );
 }
+
+

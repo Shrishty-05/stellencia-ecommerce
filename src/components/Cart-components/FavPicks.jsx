@@ -1,4 +1,4 @@
-import ProductCard from "../PDP-components/ProductCard";
+import ProductCard from "../common/ProductCard";
 
 export default function FavPicks() {
     return (

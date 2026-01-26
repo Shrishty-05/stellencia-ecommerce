@@ -1,5 +1,6 @@
 import { CATEGORIES } from "/src/config/categories.config.js";
 import CategoryCard from "/src/components/Home-sections/CategoryCard.jsx";
+import { Link } from "react-router-dom";
 
 export default function Categories() {
   return (
@@ -13,11 +14,14 @@ export default function Categories() {
 
       <div className="flex gap-6 px-5 py-5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-8 md:px-10">
         {CATEGORIES.map((category) => (
+          <Link to={`/plp/${category.id}`}>
           <CategoryCard
             key={category.id}
             label={category.label}
             icon={category.icon}
           />
+          </Link>
+            
         ))}
       </div>
     </section>

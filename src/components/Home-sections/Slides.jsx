@@ -32,7 +32,7 @@ export default function Slides() {
           alt={`Jewellery promotion slide ${index + 1}`}
           sizes="100vw"
           className={`absolute top-1/2 left-1/2 
-          h-full w-auto
+          h-full w-full
           object-contain md:object-cover
           -translate-x-1/2 -translate-y-1/2
           transition-opacity duration-1000
