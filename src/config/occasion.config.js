@@ -8,6 +8,7 @@ export const OCCASIONS = [
   {
     id: "casual",
     title: "Casual",
+    slug: "casual",
     image: casual,
     desktop: "col-span-2",
     mobile: "col-span-2",
@@ -15,6 +16,7 @@ export const OCCASIONS = [
   {
     id: "work",
     title: "Work",
+    slug : "work",
     image: work,
     desktop: "row-span-2",
     mobile: "col-span-2",
@@ -22,6 +24,7 @@ export const OCCASIONS = [
   {
     id: "party",
     title: "Party",
+    slug:"party",
     image: party,
     desktop: "row-span-2",
     mobile: "col-span-4",
@@ -29,6 +32,7 @@ export const OCCASIONS = [
   {
     id: "date-night",
     title: "Date Night",
+    slug: "date",
     image: datenight,
     desktop: "",
     mobile: "col-span-2",
@@ -36,6 +40,7 @@ export const OCCASIONS = [
   {
     id: "ethnic",
     title: "Ethnic",
+    slug: "ethnic",
     image: ethnic,
     desktop: "col-span-2",
     mobile: "col-span-2",

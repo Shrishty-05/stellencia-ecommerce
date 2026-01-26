@@ -1,4 +1,4 @@
-import Rings from "../assets/category-icons/ring.jpeg";
+import Rings from "/forHerProducts/FRNG-012.png";
 import Pendants from "../assets/category-icons/pendant.jpeg";
 import Bracelets from "../assets/category-icons/bracelet.jpeg";
 import Earrings from "../assets/category-icons/earring.jpeg";
