@@ -1,24 +1,21 @@
-import Home from './pages/Home'
-import PLP from "./pages/PLP"
-import PDP from './pages/PDP'
-import Cart from './pages/Cart'
-import EmptyCart from './pages/EmptyCart'
-import EmptyWishlist from './pages/EmptyWishlist'
-import Error404 from './pages/Error404'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import PLP from "./pages/PLP";
+import PDP from "./pages/PDP";
 
-function App() {
-
-  return (
-    <>
-    {/* <Home />   */}
-    {/* <PLP/>   */}
-    {/* <PDP/> */}
-    {/* <Cart/> */}
-    {/* <EmptyCart/> */}
-    {/* <EmptyWishlist/> */}
-    <Error404/>
-    </>
-  )
+export default function App() {
+  return (<>
+ 
+  <BrowserRouter>
+    
+    <Routes> 
+       <Route path="/" element={<Home />} />
+      <Route path="/plp/:type" element={<PLP/>}/>
+      <Route path="/plp" element={<PLP/>}/>
+      <Route path="product/:id" element={<PDP/>}/>
+    </Routes>
+    </BrowserRouter>
+  </>
+    
+  );
 }
-
-export default App
