@@ -26,11 +26,54 @@ light pink ff7096 */
     background-color: #f9eae1;
 }
 
-.occ{
-    height: auto;
-    width : auto;
-    background-color: #640d14;
-    border-radius: .5rem;
+.occ {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+
+  /* 🔥 background fix */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* height fix */
+  min-height: 120px;          /* mobile */
+  display: flex;
+  align-items: flex-end;
 }
+
+
+.occ::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.55),
+    rgba(0,0,0,0.1),
+    transparent
+  );
+}
+
+.occ-title {
+  position: relative;
+  z-index: 2;
+  padding: 12px;
+  color: white;
+  font-weight: 500;
+}
+
+
+.occ > * {
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .occ {
+    min-height: 180px;
+  }
+}
+
 
 
