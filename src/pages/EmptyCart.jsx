@@ -1,54 +1,48 @@
 import { ShoppingBag } from "lucide-react";
-// import { Link } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
+import { Link } from "react-router-dom";
 
 export default function EmptyCart() {
   return (
     <>
+      <Navbar />
 
-    <Navbar/>
+      <div className="my-20 flex flex-col items-center justify-center min-h-[70vh] px-6 text-center bg-white">
+        
+        {/* Icon */}
+        <div className="w-24 h-24 flex items-center justify-center rounded-xl bg-[#F9F4F2] shadow-md mb-6">
+          <ShoppingBag size={40} className="text-[#6E1C2F]" />
+        </div>
 
-    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
-      
-      {/* Icon */}
-      <div className="w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 mb-4">
-        <ShoppingBag size={36} className="text-[maroon]" />
+        {/* Heading */}
+        <h2 className="text-3xl md:text-4xl font-light text-[#1A1A1A] mb-3 tracking-tight">
+          Your Cart is Empty
+        </h2>
+
+        {/* Description */}
+        <p className="text-gray-500 max-w-lg md:max-w-md mb-6 leading-relaxed">
+          Looks like you haven’t added any items yet. Explore our handcrafted 
+          jewellery and discover pieces you’ll love.
+        </p>
+
+        {/* CTA Button */}
+        <Link to="/plp"
+          className="mt-2 px-8 py-3 bg-[#6E1C2F] text-white rounded-lg 
+                     text-base font-medium hover:bg-[#5a1626] transition-all shadow-sm"
+        >
+          Explore Collection
+        </Link>
+
+        {/* Optional subtle gold accent divider */}
+        <div className="mt-10 h-[1px] w-24 bg-gradient-to-r from-transparent via-[#C6A75E] to-transparent" />
+
+        {/* Trust Badges */}
+        <div className="flex gap-8 mt-6 text-sm text-gray-500">
+          <span>✔ Free Shipping</span>
+          <span>✔ Easy Returns</span>
+          <span>✔ Secure Checkout</span>
+        </div>
       </div>
-
-      {/* Heading */}
-      <h2 className="text-2xl md:text-3xl font-semibold text-gray-900">
-        Your cart is empty
-      </h2>
-
-      {/* Description */}
-      <p className="text-gray-600 mt-3 max-w-md">
-        Looks like you haven’t added anything yet. Discover our handcrafted
-        jewellery and find something you love.
-      </p>
-
-      {/* CTA */}
-      {/* <Link
-        to="/"
-        className="mt-6 bg-[#7A1E2D] text-white px-6 py-3 rounded-xl text-lg font-medium hover:bg-[#651823] transition"
-      >
-        Explore Collection
-      </Link> */}
-
-      {/* Secondary action
-      <Link
-        to="/wishlist"
-        className="mt-3 text-sm text-gray-500 hover:text-gray-700"
-      >
-        View Wishlist
-      </Link> */}
-
-      {/* Trust badges
-      <div className="flex gap-6 mt-10 text-sm text-gray-500">
-        <span>✔ Free Shipping</span>
-        <span>✔ Easy Returns</span>
-        <span>✔ Secure Checkout</span>
-      </div> */}
-    </div>
     </>
   );
 }

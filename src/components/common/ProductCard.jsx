@@ -1,139 +1,63 @@
-// import WishlistButton from "../common/WishlistButton"
-
-// export default function ProductCard({
-//   id = null,
-//   image = "/placeholder.png",
-//   title = "",
-//   price = "",
-//   isWishlisted = false,
-//   onAddToCart = () => {},
-//   onToggleWishlist = () => {},
-// }) {
-//   return (
-//     <div className="border rounded-lg overflow-hidden bg-white relative w-full h-auto shrink-0 md:w-auto md:max-h-auto">
-//       <WishlistButton
-//         isWishlisted={isWishlisted}
-//         onToggleWishlist={() => onToggleWishlist(id)}
-//       />
-
-//       <img src={image} alt={title} className="w-full aspect-square object-cover" />
-
-//       <div className="p-3 text-left">
-//         <p className="text-sm font-semibold text-gray-900">₹{price}</p>
-//         <p className="text-sm text-gray-700 mt-1 line-clamp-2">{title}</p>
-//       </div>
-
-//       <button
-//         onClick={() => onAddToCart(id)}
-//         className="w-full bg-[#7A1E2D] text-white text-sm py-2"
-//       >
-//         Add to Cart
-//       </button>
-//     </div>
-//   );
-// }
-
-// import { Link } from "react-router-dom";
-
-// export default function ProductCard({
-//   id,
-//   image,
-//   title,
-//   price,
-//   isWishlisted,
-//   onAddToCart,
-//   onToggleWishlist,
-// }) {
-//   return (
-//     <div className="border rounded-lg overflow-hidden bg-white relative w-full h-auto shrink-0 md:w-auto">
-
-//       {/* Wishlist - absolute top right */}
-//       <WishlistButton
-//         wishlisted={isWishlisted}
-//         onToggle={(e) => {
-//           e.stopPropagation(); // Click ko Link pe propagate hone se roke
-//           onToggleWishlist(id);
-//         }}
-//       />
-
-//       {/* Image + Title clickable - Link */}
-//       <Link to={`/product/${id}`}>
-//         <img
-//           src={image}
-//           alt={title}
-//           className="w-full aspect-square object-cover"
-//         />
-//         <div className="p-3 text-left">
-//           <p className="text-sm font-semibold text-gray-900">₹{price}</p>
-//           <p className="text-sm text-gray-700 mt-1 line-clamp-2">{title}</p>
-//         </div>
-//       </Link>
-
-//       {/* Add to Cart button */}
-//       <button
-//         onClick={(e) => {
-//           e.stopPropagation(); // Click ko Link pe propagate hone se roke
-//           onAddToCart(id);
-//         }}
-//         className="w-full bg-[#7A1E2D] text-white text-sm py-2"
-//       >
-//         Add to Cart
-//       </button>
-//     </div>
-//   );
-// }
-
+// import { useWishlist } from "./WishlistContext";
+import { useCart } from "../Cart-components/CartContext";
 import { Link } from "react-router-dom";
-import WishlistButton from "../common/WishlistButton";
+// import WishlistButton from "./WishlistButton";
 
-export default function ProductCard({
-  id,
-  image,
-  title,
-  price,
-  isWishlisted,
-  onAddToCart,
-  onToggleWishlist,
-}) {
+export default function ProductCard({ id, image, title, price }) {
+  const { addToCart, cartItems } = useCart();
+  // const { toggleWishlist, isWishlisted } = useWishlist();
+
+  const product = { id, image, title, price };
+
+  // const wishlisted = isWishlisted(id);
+  const isInCart = cartItems.some((item) => item.id === id);
+
+  localStorage.clear();
+
   return (
-    <div className="border rounded-lg overflow-hidden bg-white relative flex flex-col h-full">
+    <div className="group relative bg-white rounded-xl overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg transition-all">
 
       {/* Wishlist */}
-      <WishlistButton
-        wishlisted={isWishlisted}
-        onToggle={(e) => {
-          e.stopPropagation();
-          onToggleWishlist(id);
-        }}
-      />
+      {/* <div className="absolute top-4 right-4 z-10">
+        <WishlistButton
+          wishlisted={wishlisted}
+          onToggle={() => {
+            console.log("clicked",product);
+            toggleWishlist(product)}}
+        />
+      </div> */}
 
-      {/* Clickable content */}
+      {/* Product Image & Info */}
       <Link to={`/product/${id}`} className="flex flex-col flex-grow">
         <img
           src={image}
           alt={title}
-          className="w-full aspect-square object-cover"
+          className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
         />
-
-        {/* Details */}
-        <div className="p-3 text-left grow">
-          <p className="text-sm font-semibold text-gray-900">₹{price}</p>
-          <p className="text-sm text-gray-700 mt-1 line-clamp-2">
+        <div className="px-6 py-5 flex flex-col gap-2">
+          <h3 className="text-[15px] font-medium text-[#1A1A1A] line-clamp-2">
             {title}
-          </p>
+          </h3>
+          <p className="text-[#6E1C2F] font-semibold text-lg">₹{price}</p>
         </div>
       </Link>
 
-      {/* Button fixed at bottom */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onAddToCart(id);
-        }}
-        className="mt-auto w-full bg-[#7A1E2D] text-white text-sm py-2"
-      >
-        Add to Cart
-      </button>
+      {/* Add / Go to Cart */}
+      {isInCart ? (
+        <Link
+          to="/cart"
+          className="mt-auto mx-6 mb-6 border border-[#6E1C2F] text-[#6E1C2F] py-3 rounded-lg text-center hover:bg-[#6E1C2F] hover:text-white transition-all duration-300"
+        >
+          Go to Cart
+        </Link>
+      ) : (
+        <button
+          onClick={() => addToCart(product)}
+          className="mt-auto mx-6 mb-6 bg-[#6E1C2F] text-white py-3 rounded-lg hover:bg-[#581623] transition-all duration-300"
+        >
+          Add to Cart
+        </button>
+      )}
     </div>
   );
 }

@@ -1,28 +1,47 @@
-import { CATEGORIES } from "/src/config/categories.config.js";
+
+import { CATEGORIES } from "../../config/categories.config";
 import CategoryCard from "/src/components/Home-sections/CategoryCard.jsx";
 import { Link } from "react-router-dom";
+
 
 export default function Categories() {
   return (
     <section
-  id="category"
-  className="w-full py-12 bg-gradient-to- from-[maroon]/10 via-white to-[maroon]/10"
->
-      <h1 className="text-2xl md:text-4xl font-semibold tracking-wide text-center mb-7">
-        Shop by Category
-      </h1>
+      id="category"
+      className="w-full bg-white py-20"
+    >
+      {/* Container */}
+      <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-24">
+        
+        {/* Section Label */}
+        <p className="text-[maroon]/70 text-xs tracking-[0.4em] uppercase text-center">
+          Discover
+        </p>
 
-      <div className="flex gap-6 px-5 py-5 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory md:grid md:grid-cols-3 lg:grid-cols-4 md:gap-8 md:px-10">
-        {CATEGORIES.map((category) => (
-          <Link to={`/plp/${category.id}`}>
-          <CategoryCard
-            key={category.id}
-            label={category.label}
-            icon={category.icon}
-          />
-          </Link>
-            
-        ))}
+        {/* Main Heading */}
+        <h1 className="mt-4 text-3xl md:text-5xl font-light text-center text-[maroon] tracking-tight">
+          Shop by Category
+        </h1>
+
+        {/* Subtle Divider */}
+        <div className="mt-6 mb-16 h-[1px] w-20 mx-auto bg-[maroon]/30" />
+
+        {/* Categories Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-10 md:gap-14">
+  {CATEGORIES.map((category) => (
+    <Link 
+      key={category.id}
+      to={`/plp/${category.id}`}
+      className="group"
+    >
+      <CategoryCard
+        label={category.label}
+        icon={category.icon}
+      />
+    </Link>
+  ))}
+</div>
+
       </div>
     </section>
   );
