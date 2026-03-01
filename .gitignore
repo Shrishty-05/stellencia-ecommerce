@@ -12,9 +12,6 @@ dist
 dist-ssr
 *.local
 
-public
-src/assets
-src/data
 
 # Editor directories and files
 .vscode/*
