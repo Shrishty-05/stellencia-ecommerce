@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-import date from "../../assets/occasion-icons/date.jpeg";
-import workwear from "../../assets/occasion-icons/workwear.jpeg";
-import ethnic from "../../assets/occasion-icons/ethnic.jpeg";
-import party from "../../assets/occasion-icons/party.jpeg";
+import date from "/assets/occasion-icons/date.jpeg"
+import workwear from "/assets/occasion-icons/workwear.jpeg";
+import ethnic from "/assets/occasion-icons/ethnic.jpeg";
+import party from "/assets/occasion-icons/party.jpeg";
 
 const occasions = [
   {

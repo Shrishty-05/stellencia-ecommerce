@@ -4,12 +4,12 @@ const RECIPIENTS = [
   {
     id: "women",
     label: "For Her",
-    image: "/src/assets/her.png",
+    image: "/assets/her.png",
   },
   {
     id: "men",
     label: "For Him",
-    image: "/src/assets/him.png",
+    image: "/assets/him.png",
   },
 ];
 
