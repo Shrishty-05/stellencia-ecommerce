@@ -1,45 +1,64 @@
-import Navbar from "../components/common/Navbar"
-import ProdAmount from "../components/Cart-components/ProdAmount"
-import Divider from "../components/common/Divider"
-import OrderSummary from "../components/Cart-components/OrderSummary"
-import FavPicks from "../components/Cart-components/FavPicks"
-import { useCart } from "../components/Cart-components/CartContext"
+import Navbar from "../components/common/Navbar";
+import ProdAmount from "../components/Cart-components/ProdAmount";
+import OrderSummary from "../components/Cart-components/OrderSummary";
+import { useCart } from "../components/Cart-components/CartContext";
+import EmptyCart from "../pages/EmptyCart";
 
-export default function Cart(){
-    const { cartItems } = useCart();
-    return (
-        <> 
-        <Navbar />
+export default function Cart() {
+  const { cartItems, clearCart } = useCart();
 
-        {/* header */}
-         <div className="cart-page-header flex items-center justify-between px-4 md:px-8 py-4">
-                <h1 className="text-xl md:text-2xl font-sans font-semibold tracking-wide text-gray-900">
-                    Shopping Cart
+  return (
+    <>
+      {cartItems.length !== 0 ? (
+        <>
+          <Navbar />
+
+          <section className="bg-[#faf7f4] min-h-screen pt-28 pb-20 px-6 lg:px-16">
+            <div className="max-w-7xl mx-auto">
+
+              {/* Header */}
+              <div className="mb-12 text-center">
+                <h1 className="text-4xl md:text-5xl font-light text-[#1A1A1A] tracking-tight">
+                  Your Shopping Cart
                 </h1>
+
+                <div className="mt-4 h-[1px] w-24 mx-auto 
+                                bg-gradient-to-r 
+                                from-transparent via-[#C6A75E]/60 to-transparent" />
+              </div>
+
+              {/* Clear Cart Button */}
+              <div className="flex justify-end mb-6">
+                <button
+                  onClick={clearCart}
+                  className="px-5 py-3 bg-[#6E1C2F] text-white rounded-lg 
+                             text-sm md:text-base font-medium 
+                             hover:bg-[#5a1626] transition-all shadow-sm"
+                >
+                  Clear Cart
+                </button>
+              </div>
+
+              {/* Layout */}
+              <div className="grid md:grid-cols-[1.5fr_1fr] gap-10 md:gap-14">
+
+                {/* Left - Cart Items */}
+                <div className="space-y-6 md:space-y-8">
+                  {cartItems.map((item) => (
+                    <ProdAmount key={item.id} item={item} />
+                  ))}
+                </div>
+
+                {/* Right - Summary */}
+                <OrderSummary />
+
+              </div>
             </div>
-
-            <Divider/>
-
-         {/* <section className="flex flex-col md:flex-row md:gap-8 max-w-7xl mx-auto px-4 md:px-8"> */}
-         <section className=" flex flex-col mb-7 mx-3 md:flex-row md:justify-center gap-3 md:gap-8 max-w-7xl md:mx-auto lg:mx-10 md:px-6 lg:px-0">
-
-        {/* cart items */}
-        <div className="cart-items-section w-full">
-              {cartItems.map(item => {
-  return <ProdAmount key={item.id} item={item} />;
-})}
-        </div>
-      
-
-
-        <OrderSummary/>
-        </section> 
-
-        {/* <Divider />  */}
-        {/* <FavPicks/> */}
-
-        
+          </section>
         </>
-       
-    )
+      ) : (
+        <EmptyCart />
+      )}
+    </>
+  );
 }
