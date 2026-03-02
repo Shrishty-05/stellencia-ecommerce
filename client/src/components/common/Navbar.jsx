@@ -22,7 +22,8 @@ export default function Navbar() {
     { name: "About", path: "/about" }, // you can create this route later
     { name: "Contact", path: "/contact" },
     { name: "Profile", path: "/profile" },
-    { name: "Login/Signup", path: "/login" },
+    { name: "Login", path: "/login" },
+    { name: "Signup", path: "/signup"}
   ];
 
   return (
