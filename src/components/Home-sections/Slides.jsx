@@ -39,7 +39,7 @@ export default function Slides() {
         </h2>
 
         {/* Divider */}
-        <div className="mt-6 h-[1px] w-24 mx-auto bg-[maroon]/30" />
+        <div className="mt-6 h-px w-24 mx-auto bg-[maroon]/30" />
 
         {/* Slideshow Container */}
         <div className="relative mt-16 h-[45vh] md:h-[60vh] lg:h-[70vh] overflow-hidden rounded-sm">
@@ -57,7 +57,7 @@ export default function Slides() {
           ))}
 
           {/* Luxury Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/20 to-transparent" />
 
           {/* Minimal Indicators */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3">
@@ -65,7 +65,7 @@ export default function Slides() {
               <button
                 key={index}
                 onClick={() => setCurrent(index)}
-                className={`h-[2px] transition-all duration-300 ${
+                className={`h-0.5 transition-all duration-300 ${
                   index === current
                     ? "w-10 bg-white"
                     : "w-6 bg-white/40 hover:bg-white/70"
