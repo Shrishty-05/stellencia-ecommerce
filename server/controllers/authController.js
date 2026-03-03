@@ -1,10 +1,15 @@
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
+// signup user
 const signupUser = async (req,res) => {
-       console.log("req.body =", req.body);
-    try {
+     try {
         const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+        }
         
         const existingUser = await User.findOne({email});
         if(existingUser){
@@ -23,8 +28,44 @@ const signupUser = async (req,res) => {
         res.status(201).json({message : `Welcome, ${name}`});
     }
     catch (error){
-        res.status(500).json({message: "Server error", error});
+        res.status(500).json({message: "Server error"});
     }
 }
 
-export { signupUser };
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+
+        // check if user exists
+        if(!user) {
+            return res.status(400).json({message : "User not found"});
+        }
+
+        // compare password
+        const matchPwd = await bcrypt.compare(password, user.password);
+        if(!matchPwd) {
+            return res.status(400).json({message : "Invalid password"}); }
+
+        // JWT token generation
+        const token = jwt.sign(
+            { id: user._id},
+            process.env.JWT_SECRET, 
+            { expiresIn: "7d"} 
+        );
+        res.json({
+            message: "Login successfull",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email
+            }
+        })
+    }
+    catch(err) {
+        res.status(500).json({message : "Server error"});
+    }
+}
+
+export { signupUser, loginUser };
