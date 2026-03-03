@@ -10,7 +10,9 @@ import { WishlistProvider } from "./components/common/WishlistContext.jsx";
 import ScrollToTopLayout from "./ScrollToTopLayout.jsx";
 import Signup from "./pages/Signup.jsx";
 import Login from "./pages/Login.jsx";
-
+import AdminPLP from "./admin/AdminPLP.jsx";
+import AddProduct from "./admin/AddProduct.jsx";
+import EditProduct from "./admin/EditProduct.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,10 @@ const router = createBrowserRouter([
       { path: "/plp", element: <PLP /> },
       { path: "/product/:id", element: <PDP /> },
       { path: "/wishlist", element: <EmptyWishlist /> },
-      { path: "/cart", element: <Cart /> }
+      { path: "/cart", element: <Cart /> },
+      { path: "/admin/products", element: <AdminPLP/>},
+      { path: "/admin/products/add", element: <AddProduct/>},
+      { path: "/admin/products/update/:id", element: <EditProduct/>}
     ],
   },
 ]);
