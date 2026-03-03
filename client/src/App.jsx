@@ -9,19 +9,21 @@ import { CartProvider } from "./components/Cart-components/CartContext.jsx";
 import { WishlistProvider } from "./components/common/WishlistContext.jsx";
 import ScrollToTopLayout from "./ScrollToTopLayout.jsx";
 import Signup from "./pages/Signup.jsx";
+import Login from "./pages/Login.jsx";
 
 
 const router = createBrowserRouter([
   {
-    element : <ScrollToTopLayout />,
+    element: <ScrollToTopLayout />,
     children: [
-       {path:"/", element : <Home/>},
-       {path:"/signup", element: <Signup/>},
-  {path:"/plp/:type", element:<PLP />},
-  {path:"/plp" ,element:<PLP />},
-  {path:"/product/:id" ,element:<PDP />},
-  {path:"/wishlist", element:<EmptyWishlist />},
-  {path:"/cart" ,element:<Cart />}
+      { path: "/", element: <Home /> },
+      { path: "/signup", element: <Signup /> },
+      { path: "/login", element: <Login/>},
+      { path: "/plp/:type", element: <PLP /> },
+      { path: "/plp", element: <PLP /> },
+      { path: "/product/:id", element: <PDP /> },
+      { path: "/wishlist", element: <EmptyWishlist /> },
+      { path: "/cart", element: <Cart /> }
     ],
   },
 ]);
@@ -30,7 +32,7 @@ export default function App() {
   return (<>
     <WishlistProvider>
       <CartProvider>
-          <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </CartProvider>
     </WishlistProvider>
 

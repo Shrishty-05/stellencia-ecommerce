@@ -1,6 +1,5 @@
 import { useState } from "react";
 import api from "../api/axios";
-import { use } from "react";
 
 export default function Signup(){
     const [ form, setForm ] = useState({
