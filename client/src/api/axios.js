@@ -4,7 +4,7 @@ import axios from "axios";
 
 const api = axios.create({
     // base url for all api req
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'https://stellencia-ecommerce.onrender.com/api/',
 });
 
 // axios.create() => creates axios instance 
