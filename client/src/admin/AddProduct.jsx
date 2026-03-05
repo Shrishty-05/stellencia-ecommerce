@@ -11,7 +11,7 @@ export default function AddProduct() {
         price: 0,
         discountPrice: 0,
         countInStock: 0,
-        images: "",
+        image: "",
         isFeatured: false
     });
 
@@ -163,7 +163,7 @@ export default function AddProduct() {
             </label>
             <input
               type="text"
-              name="images"
+              name="image"
               onChange={handleChange}
               placeholder="Paste image URLs separated by commas"
               className="w-full border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-[#c6a14a] transition"
