@@ -1,5 +1,6 @@
 import Cart from "../models/Cart.js";
 import Product from "../models/Product.js"; // To get product details
+import mongoose from "mongoose";
 
 // Add item to cart
 export const addToCart = async (req, res) => {
@@ -11,6 +12,7 @@ export const addToCart = async (req, res) => {
 
         // Fetch product details
         const product = await Product.findById(productId);
+        console.log("PRODUCT:", product);
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
@@ -21,7 +23,7 @@ export const addToCart = async (req, res) => {
                 userId,
                 items: [{
                     productId,
-                    title: product.title,
+                    name: product.name,
                     price: product.price,
                     image: product.image,
                     quantity: 1
@@ -30,7 +32,7 @@ export const addToCart = async (req, res) => {
         } else {
             // Check if product already in cart
             const item = cart.items.find(
-                i => i.productId.toString() === productId
+                i => i.productId.toString() === productId.toString()
             );
 
             if (item) {
@@ -40,7 +42,7 @@ export const addToCart = async (req, res) => {
                 // Otherwise, push new item
                 cart.items.push({
                     productId,
-                    title: product.title,
+                    name: product.name,
                     price: product.price,
                     image: product.image,
                     quantity: 1
@@ -53,9 +55,12 @@ export const addToCart = async (req, res) => {
         res.json({ message: "Item added to cart", cart });
 
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Server error" });
-    }
+    console.error("ADD TO CART ERROR:", err);
+    res.status(500).json({
+        message: err.message,
+        error: err
+    });
+}
 };
 
 // remove item from cart
@@ -70,7 +75,7 @@ export const removeProduct = async (req, res) => {
         }
 
         cart.items = cart.items.filter(
-            i => i.productId.toString() !== productId
+            i => i.productId.toString() !== productId.toString()
         );
 
         await cart.save();
@@ -94,14 +99,14 @@ export const updateQuantity = async (req, res) => {
         }
 
         const item = cart.items.find(
-            i => i.productId.toString() === productId
+            i => i.productId.toString() === productId.toString()
         );
 
         if(!item){ return res.status(404).json("Item not found it cart");}
 
         if(quantity < 1){
             cart.items = cart.items.filter(
-                item => item.productId.toString() !== productId
+                item => item.productId.toString() !== productId.toString()
             )
         }else {
             item.quantity = quantity;
@@ -118,19 +123,37 @@ export const updateQuantity = async (req, res) => {
     }
 }
 
-export const getCart = async (req,res) => {
-    try{
-        const { userId } = req.body;
-        const cart = await Cart.findOne({userId}).populate('items.productId');
+export const getCart = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        console.log("GET CART HIT:", userId);
+
+        // Validate userId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return res.status(400).json({
+                message: "Invalid user ID format"
+            });
+        }
+
+        const cart = await Cart.findOne({ userId }).populate({
+            path: "items.productId",
+            select: "name price image"
+        });
 
         if (!cart) {
-            return res.status(404).json({ message: "Cart not found" });
+            return res.status(200).json({
+                message: "Cart empty",
+                items: []
+            });
         }
 
         res.json(cart);
+
+    } catch (err) {
+        console.error("GET CART ERROR:", err);
+        res.status(500).json({
+            message: "Server error"
+        });
     }
-     catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Server error" });
-    }
-}
+};
