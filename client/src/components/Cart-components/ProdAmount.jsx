@@ -35,8 +35,8 @@ export default function ProdAmount({ item }) {
           <button
             onClick={() =>
               item.quantity === 1
-                ? removeFromCart(item.id)
-                : updateQuantity(item.id, item.quantity - 1)
+                ? removeFromCart(item.productId)
+                : updateQuantity(item.productId, item.quantity - 1)
             }
             className="w-9 h-9 rounded-lg border border-[#6E1C2F] 
                        text-[#6E1C2F] flex items-center justify-center 
@@ -51,7 +51,7 @@ export default function ProdAmount({ item }) {
 
           <button
             onClick={() =>
-              updateQuantity(item.id, item.quantity + 1)
+              updateQuantity(item.productId, item.quantity + 1)
             }
             className="w-9 h-9 rounded-lg border border-[#6E1C2F] 
                        text-[#6E1C2F] flex items-center justify-center 
