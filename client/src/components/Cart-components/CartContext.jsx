@@ -69,7 +69,7 @@
 // export const useCart = () => useContext(CartContext);
 
 
-import api from "../api/axios"; // axios instance with baseURL + token
+import api from "../../api/axios.js"; 
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
