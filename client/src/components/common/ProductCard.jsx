@@ -10,8 +10,7 @@ export default function ProductCard({ id, image, title, price }) {
   const product = { id, image, title, price };
 
   // const wishlisted = isWishlisted(id);
-  const isInCart = cartItems.some((item) => item.id === id);
-
+const isInCart = cartItems.some((item) => item.productId === id);
   localStorage.clear();
 
   return (

@@ -19,12 +19,22 @@ export default function Navbar() {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" }, // you can create this route later
+    { name: "About", path: "/about" }, 
     { name: "Contact", path: "/contact" },
     { name: "Profile", path: "/profile" },
     { name: "Login", path: "/login" },
     { name: "Signup", path: "/signup"}
   ];
+
+  const logout = async () => {
+  try {
+    await api.post('/auth/logout'); 
+  } catch(err) {
+    console.log(err);
+  }
+  clearCart(); 
+  navigate('/login'); // redirect
+}
 
   return (
     <header
