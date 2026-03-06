@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ShoppingBag, Heart } from "lucide-react"; 
 import { Link } from "react-router-dom";
-import { useCart } from "../Cart-components/CartContext.js";
+import { useCart } from "../Cart-components/CartContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
