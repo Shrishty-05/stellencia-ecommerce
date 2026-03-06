@@ -68,13 +68,20 @@
 
 // export const useCart = () => useContext(CartContext);
 
+import { createContext, useContext, useState, useEffect } from "react";
+import api from "../../api/axios.js";
 
-import api from "../../api/axios.js"; 
+const CartContext = createContext();
 
-export function CartProvider({ children }) {
+export function CartProvider({ children, userId }) {
   const [cartItems, setCartItems] = useState([]);
 
-  // Fetch cart from backend
+  // 🔹 Fetch cart on mount
+  useEffect(() => {
+    if (userId) fetchCart(userId);
+  }, [userId]);
+
+  // 🔹 Fetch cart from backend
   const fetchCart = async (userId) => {
     try {
       const res = await api.get(`/cart/${userId}`);
@@ -86,8 +93,9 @@ export function CartProvider({ children }) {
 
   const addToCart = async (product) => {
     try {
-      const res = await api.post("/cart/add", { productId: product.id });
-      setCartItems(res.data.items);
+      if (!userId) return;
+      const res = await api.post("/cart/add", { userId, productId: product.id });
+      setCartItems(res.data.cart?.items || []);
     } catch (err) {
       console.error("Add to cart failed", err);
     }
@@ -95,8 +103,9 @@ export function CartProvider({ children }) {
 
   const removeFromCart = async (id) => {
     try {
-      const res = await api.post("/cart/delete", { productId: id });
-      setCartItems(res.data.items);
+      if (!userId) return;
+      const res = await api.post("/cart/delete", { userId, productId: id });
+      setCartItems(res.data.cart?.items || []);
     } catch (err) {
       console.error("Remove from cart failed", err);
     }
@@ -104,8 +113,9 @@ export function CartProvider({ children }) {
 
   const updateQuantity = async (id, qty) => {
     try {
-      const res = await api.post("/cart/update", { productId: id, quantity: qty });
-      setCartItems(res.data.items);
+      if (!userId) return;
+      const res = await api.post("/cart/update", { userId, productId: id, quantity: qty });
+      setCartItems(res.data.cart?.items || []);
     } catch (err) {
       console.error("Update quantity failed", err);
     }
@@ -113,8 +123,9 @@ export function CartProvider({ children }) {
 
   const clearCart = async () => {
     try {
-      const res = await api.post("/cart/clear");
-      setCartItems(res.data.items);
+      if (!userId) return;
+      const res = await api.post("/cart/clear", { userId });
+      setCartItems(res.data.cart?.items || []);
     } catch (err) {
       console.error("Clear cart failed", err);
     }
@@ -136,3 +147,5 @@ export function CartProvider({ children }) {
     </CartContext.Provider>
   );
 }
+
+export const useCart = () => useContext(CartContext);
