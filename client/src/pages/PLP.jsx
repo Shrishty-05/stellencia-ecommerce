@@ -1,12 +1,26 @@
 import Layout from "../components/common/Layout";
 import ProductCard from "../components/common/ProductCard";
 import { useParams } from "react-router-dom";
-import products from "../data/products.json";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import api from "../api/axios.js";
 
 export default function PLP() {
   const { type } = useParams();
   const [sortOption, setSortOption] = useState("recommended");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+  const fetchProducts = async () => {
+    try {
+      const { data } = await api.get("/products");
+      setProducts(data);
+    } catch (error) {
+      console.error("Failed to fetch products", error);
+    }
+  };
+
+  fetchProducts();
+}, []);
 
   /* ---------------- FILTER LOGIC ---------------- */
 
@@ -35,7 +49,7 @@ export default function PLP() {
     }
 
     return result;
-  }, [type]);
+  }, [type, products]);
 
   /* ---------------- SORT LOGIC ---------------- */
 
@@ -44,7 +58,8 @@ export default function PLP() {
 
     switch (sortOption) {
       case "price-low-high":
-        sorted.sort((a, b) => a.price - b.price);
+        sorted.sort(
+        (a, b) => (a.discountPrice || a.price) - (b.discountPrice || b.price));
         break;
 
       case "price-high-low":
@@ -119,12 +134,13 @@ export default function PLP() {
 
             {sortedProducts.map((product) => (
               <ProductCard
-                key={product.id}
-                product={product}
-                id={product.id}
-                image={product.images[0]}
-                title={product.title}
+                key={product._id}
+                // product={product}
+                _id={product._id}
+                image={product.image}
+                name={product.name}
                 price={product.price}
+                discountPrice={product.discountPrice}
               />
             ))}
 
