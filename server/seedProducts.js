@@ -1,25 +1,32 @@
 import mongoose from "mongoose";
-import Product from "./models/Product";
-import products from "./data/products.json" assert { type: "json" };
 import dotenv from "dotenv";
+import fs from "fs";
+import Product from "./models/Product.js";
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI;
+// json read karo
+const products = JSON.parse(
+  fs.readFileSync("./data/products.json", "utf-8")
+);
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
-
-const seedProducts = async () => {
+async function seedProducts() {
   try {
-    await Product.deleteMany({}); // optional: clean DB
+    await mongoose.connect(process.env.MONGO_URI);
+
+    // purane products delete
+    await Product.deleteMany();
+
+    // naye insert
     await Product.insertMany(products);
-    console.log("Products seeded!");
-    mongoose.disconnect();
-  } catch (err) {
-    console.error(err);
+
+    console.log("Products Seeded Successfully ✅");
+
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
   }
-};
+}
 
 seedProducts();
