@@ -1,18 +1,20 @@
-export default function OrderSummary() {
-  const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+import { useCart } from "../../context/CartContext";
 
-  const subtotal = savedCart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+export default function OrderSummary() {
+  const { cartItems } = useCart();
+
+  const subTotal = cartItems.reduce(
+    (acc, item) => acc + (item.price || 0) * (item.quantity || 1),
     0
   );
 
-  const makingCharges = 200;
+  // const makingCharges = ;
   const taxes = 100;
   const shippingCharges = 0;
   const couponDiscount = 200;
 
   const totalAmount =
-    subtotal + makingCharges + taxes + shippingCharges - couponDiscount;
+    subTotal + taxes + shippingCharges - couponDiscount;
 
   return (
     <section className="bg-white rounded-2xl p-8 
@@ -24,20 +26,20 @@ export default function OrderSummary() {
       </h2>
 
       {/* Divider */}
-      <div className="h-[1px] bg-gradient-to-r 
+      <div className="h-px bg-linear-to-r 
                       from-transparent via-[#C6A75E]/40 to-transparent mb-8" />
 
       <div className="space-y-4 text-[15px] text-gray-600">
 
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span className="text-[#1A1A1A]">₹{subtotal}</span>
+          <span className="text-[#1A1A1A]">₹{subTotal}</span>
         </div>
 
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           <span>Making Charges</span>
           <span>₹{makingCharges}</span>
-        </div>
+        </div> */}
 
         <div className="flex justify-between">
           <span>Taxes</span>
@@ -52,7 +54,7 @@ export default function OrderSummary() {
         </div>
       </div>
 
-      <div className="h-[1px] bg-[#eee] my-8" />
+      <div className="h-px bg-[#eee] my-8" />
 
       <div className="flex justify-between text-lg font-semibold text-[#1A1A1A]">
         <span>Total</span>

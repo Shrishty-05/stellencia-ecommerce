@@ -1,83 +1,39 @@
-// // import { useWishlist } from "./WishlistContext";
-// import { useCart } from "../Cart-components/CartContext";
-// import { Link } from "react-router-dom";
-// import { useState, useEffect } from "react";
-// import api from "../../api/axios.js";
-// // import WishlistButton from "./WishlistButton";
-
-// export default function ProductCard({ id, image, name, price }) {
-//   const { addToCart, cartItems } = useCart();
-//   const [products, setProducts] = useState([]);
-//   // const { toggleWishlist, isWishlisted } = useWishlist();
-
-//   const product = { id, image, name, price };
-
-//   // const wishlisted = isWishlisted(id);
-// const isInCart = cartItems.some((item) => item.productId === id);
-//   localStorage.clear();
-
-//   return (
-//     <div className="group relative bg-white rounded-xl overflow-hidden flex flex-col h-full shadow-md hover:shadow-lg transition-all">
-
-//       {/* Wishlist */}
-//       {/* <div className="absolute top-4 right-4 z-10">
-//         <WishlistButton
-//           wishlisted={wishlisted}
-//           onToggle={() => {
-//             console.log("clicked",product);
-//             toggleWishlist(product)}}
-//         />
-//       </div> */}
-
-//       {/* Product Image & Info */}
-//       <Link to={`/product/${id}`} className="flex flex-col flex-grow">
-//         <img
-//           src={image}
-//           alt={name}
-//           className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
-//         />
-//         <div className="px-6 py-5 flex flex-col gap-2">
-//           <h3 className="text-[15px] font-medium text-[#1A1A1A] line-clamp-2">
-//             {title}
-//           </h3>
-//           <p className="text-[#6E1C2F] font-semibold text-lg">₹{price}</p>
-//         </div>
-//       </Link>
-
-//       {/* Add / Go to Cart */}
-//       {isInCart ? (
-//         <Link
-//           to="/cart"
-//           className="mt-auto mx-6 mb-6 border border-[#6E1C2F] text-[#6E1C2F] py-3 rounded-lg text-center hover:bg-[#6E1C2F] hover:text-white transition-all duration-300"
-//         >
-//           Go to Cart
-//         </Link>
-//       ) : (
-//         <button
-//           onClick={() => addToCart(product)}
-//           className="mt-auto mx-6 mb-6 bg-[#6E1C2F] text-white py-3 rounded-lg hover:bg-[#581623] transition-all duration-300"
-//         >
-//           Add to Cart
-//         </button>
-//       )}
-//     </div>
-//   );
-// }
-
-import { useCart } from "../Cart-components/CartContext";
+import { useEffect, useState, useContext } from "react";
+import { useCart } from "../../context/CartContext.jsx";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/authContext.jsx"; // auth context
 
 export default function ProductCard({ _id, name, image, price, discountPrice }) {
+  const { cartItems, addToCart } = useCart();
+  const { user } = useContext(AuthContext);
 
-  const { addToCart, cartItems } = useCart();
-
-  const isInCart = cartItems.some((item) => item.productId === _id);
+  const [isInCart, setIsInCart] = useState(false);
 
   const product = {
-    productId: _id,
+    _id,
     name,
-    image: image,
-    price: discountPrice || price
+    image,
+    price: discountPrice || price,
+  };
+
+  // Whenever cartItems or _id change, recalc whether this product is in cart
+  useEffect(() => {
+    const found = cartItems?.some(item => item.productId.toString() === _id);
+    setIsInCart(found);
+  }, [cartItems, _id]);
+
+  const handleAdd = async () => {
+    if (!user) {
+      alert("Please login to add items to cart");
+      return;
+    }
+
+    try {
+      await addToCart(product);
+      console.log("Added to cart:", product._id);
+    } catch (err) {
+      console.error("Add to cart failed:", err);
+    }
   };
 
   return (
@@ -96,7 +52,7 @@ export default function ProductCard({ _id, name, image, price, discountPrice }) 
             {name}
           </h3>
 
-          <p className="text-[#6E1C2F] font-semibold text-lg">
+          <p className="text-[maroon] font-semibold text-lg">
             ₹{discountPrice || price}
           </p>
         </div>
@@ -106,14 +62,14 @@ export default function ProductCard({ _id, name, image, price, discountPrice }) 
       {isInCart ? (
         <Link
           to="/cart"
-          className="mt-auto mx-6 mb-6 border border-[#6E1C2F] text-[#6E1C2F] py-3 rounded-lg text-center hover:bg-[#6E1C2F] hover:text-white transition-all duration-300"
+          className="mt-auto mx-6 mb-6 border border-[maroon] text-[maroon] py-3 rounded-lg text-center hover:bg-[maroon] hover:text-white transition-all duration-300"
         >
           Go to Cart
         </Link>
       ) : (
         <button
-          onClick={() => addToCart(product)}
-          className="mt-auto mx-6 mb-6 bg-[#6E1C2F] text-white py-3 rounded-lg hover:bg-[#581623] transition-all duration-300"
+          onClick={handleAdd}
+          className="mt-auto mx-6 mb-6 bg-[maroon] text-white py-3 rounded-lg hover:bg-[#581623] transition-all duration-300 cursor-pointer"
         >
           Add to Cart
         </button>
@@ -121,4 +77,3 @@ export default function ProductCard({ _id, name, image, price, discountPrice }) 
     </div>
   );
 }
-

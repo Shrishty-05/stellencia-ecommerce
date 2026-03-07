@@ -1,8 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import api from "../api/axios.js";
+import { AuthContext } from "../context/authContext.jsx";
 
 export default function Login() {
+
+    const { login } = useContext(AuthContext);
 
     const [form, setForm] = useState({
         email: "",
@@ -28,6 +31,11 @@ export default function Login() {
 
             // save token to local storage
             localStorage.setItem("token", res.data.token);
+
+            login({
+                ...res.data.user,
+                token: res.data.token
+            })
 
             setMessage("Login successful");
 

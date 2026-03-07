@@ -1,40 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Menu, X, ShoppingBag, Heart } from "lucide-react"; 
-import { Link } from "react-router-dom";
-import { useCart } from "../Cart-components/CartContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import { AuthContext } from "../../context/authContext";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { cartCount } = useCart();
+  const { cartCount, clearCart } = useCart();
+  const { user, logout: authLogout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Profile", path: "/profile" },
+    { name: `Cart (${cartCount})`, path: "/cart"},
     { name: "About", path: "/about" }, 
     { name: "Contact", path: "/contact" },
-    { name: "Profile", path: "/profile" },
     { name: "Login", path: "/login" },
     { name: "Signup", path: "/signup"}
   ];
 
-  const logout = async () => {
-  try {
-    await api.post('/auth/logout'); 
-  } catch(err) {
-    console.log(err);
-  }
-  clearCart(); 
-  navigate('/login'); // redirect
-}
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // clear JWT
+    authLogout();                      // clear AuthContext
+    clearCart();                       // reset cart
+    navigate("/");                // redirect
+  };
+  console.log(cartCount);
 
   return (
     <header
@@ -46,7 +45,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-24">
         <div className="flex items-center justify-between h-24 lg:h-28">
-          
+
           {/* Logo */}
           <Link to="/" className="leading-none select-none">
             <span className="block text-[maroon] text-lg lg:text-xl tracking-[0.38em] uppercase">
@@ -60,54 +59,66 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:block" aria-label="Primary Navigation">
             <ul className="flex items-center gap-16">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="relative group text-[maroon]/80 text-sm tracking-[0.28em] uppercase font-light transition-colors duration-300"
+              {navLinks.map((link) => {
+                // Auth aware logic
+                if ((link.name === "Login" || link.name === "Signup") && user) return null;
+                if ((link.name === "Profile") && !user) return null;
+
+                return (
+                  <li key={link.name}>
+                    <Link
+                      to={link.path}
+                      className="relative group text-[maroon]/80 text-sm tracking-[0.28em] uppercase font-light transition-colors duration-300"
+                    >
+                      <span className="transition-colors duration-300 group-hover:text-[maroon]">
+                        {link.name}
+                      </span>
+                      <span className="absolute left-0 -bottom-2 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+                    </Link>
+                  </li>
+                );
+              })}
+
+              {/* Auth Logout Button */}
+              {user && (
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="text-[maroon]/80 text-sm tracking-[0.28em] uppercase font-light hover:text-red-600 transition-colors duration-300"
                   >
-                    <span className="transition-colors duration-300 group-hover:text-[maroon]">
-                      {link.name}
-                    </span>
-                    <span className="absolute left-0 -bottom-2 h-[1px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
-                  </Link>
+                    Logout
+                  </button>
                 </li>
-              ))}
+              )}
+
+              
             </ul>
           </nav>
-
-          {/* Right Section */}
-          <div className="flex items-center gap-8 lg:gap-10">
-            
-            {/* Wishlist
-            <Link
-              to="/wishlist"
-              aria-label="Wishlist"
-              className="text-[maroon]/80 hover:text-green transition-colors duration-300"
-            >
-              <Heart size={22} strokeWidth={1.4} />
-            </Link> */}
-
+              
+             
+             
+          {/* Right Section (Mobile menu toggle) */}
+          <div className="flex items-center gap-8 lg:hidden">
             {/* Cart */}
-            <Link
-              to="/cart"
-              aria-label="Cart"
-              className="relative text-[maroon]/80 hover:text-gray transition-colors duration-300"
-            >
-              <ShoppingBag size={22} strokeWidth={1.4} />
-              {cartCount > 0 &&
-              (<span className="absolute -top-2 -right-2 bg-white/95 text-[maroon] text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-medium shadow-md">
-                {cartCount}
-              </span>)
-              }              
-            </Link>
-
-            {/* Mobile Menu Button */}
+              <div>
+                 </div>
+                <Link
+                  to="/cart"
+                  aria-label="Cart"
+                  className="block relative text-[maroon]/80 hover:text-gray transition-colors duration-300"
+                >
+                  <ShoppingBag size={22} strokeWidth={1.4} />
+                  {(
+                    <span className="absolute -top-2 -right-2 bg-white/95 text-[maroon] text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-medium shadow-md">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
             <button
               type="button"
               aria-label="Toggle Menu"
               onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden text-[maroon]/80 hover:text-[secondary] transition-colors duration-300"
+              className="text-[maroon]/80 hover:text-[secondary] transition-colors duration-300"
             >
               {isOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
@@ -123,17 +134,36 @@ export default function Navbar() {
         <div className="lg:hidden bg-white border-t border-[secondary]/10">
           <nav className="max-w-7xl mx-auto px-8 py-12">
             <ul className="flex flex-col gap-8">
-              {navLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className="block text-[maroon]/80 text-sm tracking-[0.3em] uppercase font-light hover:text-[secondary] transition-colors duration-300"
+              {navLinks.map((link) => {
+                if ((link.name === "Login" || link.name === "Signup") && user) return null;
+                if ((link.name === "Profile") && !user) return null;
+
+                return (
+                  <li key={link.name}>
+                    <Link
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className="block text-[maroon]/80 text-sm tracking-[0.3em] uppercase font-light hover:text-[secondary] transition-colors duration-300"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                );
+              })}
+
+              {user && (
+                <li>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="block text-[maroon]/80 text-sm tracking-[0.3em] uppercase font-light hover:text-red-600 transition-colors duration-300"
                   >
-                    {link.name}
-                  </Link>
+                    Logout
+                  </button>
                 </li>
-              ))}
+              )}
             </ul>
           </nav>
         </div>

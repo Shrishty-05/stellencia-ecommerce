@@ -5,7 +5,8 @@ import PDP from "./pages/PDP";
 import EmptyWishlist from "./pages/EmptyWishlist.jsx";
 import Cart from "./pages/Cart.jsx";
 import ScrollToTop from "./ScrollToTopLayout.jsx";
-import { CartProvider } from "./components/Cart-components/CartContext.jsx";
+import { CartProvider } from "./context/CartContext.jsx";
+import { AuthProvider } from "./context/authContext.jsx";
 import { WishlistProvider } from "./components/common/WishlistContext.jsx";
 import ScrollToTopLayout from "./ScrollToTopLayout.jsx";
 import Signup from "./pages/Signup.jsx";
@@ -35,11 +36,15 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (<>
-    <WishlistProvider>
-      <CartProvider>
+
+<AuthProvider>
+  {/* <WishlistProvider> */}
+      <CartProvider >
         <RouterProvider router={router} />
       </CartProvider>
-    </WishlistProvider>
+    {/* </WishlistProvider> */}
+</AuthProvider>
+    
 
 
   </>

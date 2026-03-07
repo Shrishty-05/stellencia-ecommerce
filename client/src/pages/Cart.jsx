@@ -1,7 +1,7 @@
 import Navbar from "../components/common/Navbar";
 import ProdAmount from "../components/Cart-components/ProdAmount";
 import OrderSummary from "../components/Cart-components/OrderSummary";
-import { useCart } from "../components/Cart-components/CartContext";
+import { useCart } from "../context/CartContext";
 import EmptyCart from "../pages/EmptyCart";
 
 export default function Cart() {
@@ -9,11 +9,11 @@ export default function Cart() {
 
   return (
     <>
-      {cartItems.length !== 0 ? (
+      {cartItems.length > 0 ? (
         <>
           <Navbar />
 
-          <section className="bg-[#faf7f4] min-h-screen pt-28 pb-20 px-6 lg:px-16">
+          <section className="bg-[#faf7f4] min-h-screen my-10 pt-28 pb-20 px-6 lg:px-16">
             <div className="max-w-7xl mx-auto">
 
               {/* Header */}
@@ -45,7 +45,7 @@ export default function Cart() {
                 {/* Left - Cart Items */}
                 <div className="space-y-6 md:space-y-8">
                   {cartItems.map((item) => (
-                    <ProdAmount key={item.id} item={item} />
+                    <ProdAmount key={item.productId} item={item} />
                   ))}
                 </div>
 

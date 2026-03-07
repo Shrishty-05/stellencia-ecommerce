@@ -1,13 +1,10 @@
-import {useCart} from "./CartContext"
+import { useCart } from "../../context/CartContext";
 
 export default function ProdAmount({ item }) {
   const { updateQuantity, removeFromCart } = useCart();
 
   return (
-    <div className="bg-white rounded-2xl p-6 
-                    shadow-[0_15px_40px_rgba(0,0,0,0.05)]
-                    border border-[#f1ece7]
-                    flex gap-6">
+    <div className="bg-white rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.05)] border border-[#f1ece7] flex gap-6">
 
       {/* Image */}
       <img
@@ -21,7 +18,7 @@ export default function ProdAmount({ item }) {
 
         <div>
           <h3 className="text-lg font-medium text-[#1A1A1A]">
-            {item.title}
+            {item.name}
           </h3>
 
           <p className="text-[#6E1C2F] font-semibold mt-2">
@@ -38,24 +35,16 @@ export default function ProdAmount({ item }) {
                 ? removeFromCart(item.productId)
                 : updateQuantity(item.productId, item.quantity - 1)
             }
-            className="w-9 h-9 rounded-lg border border-[#6E1C2F] 
-                       text-[#6E1C2F] flex items-center justify-center 
-                       hover:bg-[#6E1C2F] hover:text-white transition"
+            className="w-9 h-9 rounded-lg border border-[#6E1C2F] text-[#6E1C2F] flex items-center justify-center hover:bg-[#6E1C2F] hover:text-white transition"
           >
             −
           </button>
 
-          <span className="text-md font-medium">
-            {item.quantity}
-          </span>
+          <span className="text-md font-medium">{item.quantity}</span>
 
           <button
-            onClick={() =>
-              updateQuantity(item.productId, item.quantity + 1)
-            }
-            className="w-9 h-9 rounded-lg border border-[#6E1C2F] 
-                       text-[#6E1C2F] flex items-center justify-center 
-                       hover:bg-[#6E1C2F] hover:text-white transition"
+            onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+            className="w-9 h-9 rounded-lg border border-[#6E1C2F] text-[#6E1C2F] flex items-center justify-center hover:bg-[#6E1C2F] hover:text-white transition"
           >
             +
           </button>
