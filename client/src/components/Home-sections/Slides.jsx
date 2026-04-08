@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 
 const images = [
-  "/assets/SlideShowImg/slideImg1.png",
-  "/assets/SlideShowImg/slideImg2.png",
+  "public/assets/SlideShowImg/slideImg1.png",
+  "public/assets/SlideShowImg/slideImg2.png",
   "/assets/SlideShowImg/slideImg3.png",
   "/assets/SlideShowImg/slideImg4.png",
 ];
