@@ -12,7 +12,7 @@ export default function Hero() {
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="public/assets/hero-vd-tb.mp4" type="video/mp4" />
+        <source src="/assets/hero-vd-tb.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}
