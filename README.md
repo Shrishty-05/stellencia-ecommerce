@@ -1,16 +1,78 @@
-# React + Vite
+# 💎 Stellencia – MERN Jewellery E-Commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Stellencia is a full-stack MERN-based jewellery e-commerce web application designed to provide a seamless online shopping experience with modern UI, dynamic product management, and personalized cart functionality.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+### 👤 Authentication & User Management
+- User Signup/Login
+- JWT-based Authentication
+- Secure Password Handling
+- Account-specific Cart System
+- Persistent Login Sessions
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🛍️ Product Management
+- Product Listing Page (PLP)
+- Product Detail Page (PDP)
+- Dynamic Product Rendering
+- Similar Products Recommendation
+- Product Sorting:
+  - Recommended
+  - Price: Low to High
+  - Price: High to Low
+  - Newest
 
-## Expanding the ESLint configuration
+### 🛒 Cart Functionality
+- Add to Cart
+- Remove from Cart
+- Quantity Management
+- Dynamic Total Price Calculation
+- User-specific Cart Persistence
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🎨 UI/UX
+- Responsive Design
+- Modern Jewellery-focused Interface
+- Clean Product Cards
+- Smooth Navigation Experience
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React.js
+- React Router DOM
+- Context API / State Management
+- CSS / Tailwind CSS
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+
+### Authentication
+- JWT (JSON Web Tokens)
+- bcrypt.js
+
+### Deployment
+- Frontend: Vercel 
+- Backend: Render
+- Database: MongoDB Atlas
+
+---
+
+## 📂 Project Structure
+
+```bash
+stellencia/
+│
+├── client/         # React Frontend
+├── server/         # Express Backend
+│
+└── README.md
+
+
+Live : https://stellencia.vercel.app/
